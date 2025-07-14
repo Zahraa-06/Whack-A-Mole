@@ -37,10 +37,20 @@ const gameboard = document.querySelector('.gameboard')
 const timer = document.querySelector('#timer')
 const score = document.querySelector('.score') 
 //
+const difficultySettings = {
+    'Easy Mode': {showTime: 2500, appearInterval: 1500},
+    'Medium Mode': {showTime: 2000, appearInterval: 1000},
+    'Hard Mode': {showTime: 800, appearInterval: 800}
+}
+//
 
-
+let gameInterval
+let timerInterval
 let holesNum = 0
 let scoreCount = 0
+let timeLeft = 60
+let activeMole = null
+let moleTimeout = null
 let currentDifficulty = ''
 
 mainPage.style.display = 'block'
@@ -116,14 +126,60 @@ function setupGameboard () {
 function appearRandomMole() {
     const holes = document.querySelectorAll ('.hole')
     const holeDivs = [...holes]
-    const num = Math.floor(Math.random() * (holesNum)) + 1 //
-    const randomHole = holeDivs [num-1]
-    console.log(randomHole)
+
+    if (moleTimeout) {
+        clearTimeout(moleTimeout)
+        moleTimeout = null
+    }
+
+    if (activeMole) {
+        activeMole.firstChild.style.display = 'none'
+        activeMole.lastChild.style.display = 'block'
+    }
+
+    let randomHole
+    do {
+        num = Math.floor(Math.random() * holesNum) + 1
+        randomHole = holeDivs [num-1]
+    } while (randomHole === activeMole && holesNum > 1) 
+
     randomHole.firstChild.style.display = 'block'
     randomHole.lastChild.style.display = 'none'
+    activeMole = randomHole
 
+    const showTime = difficultySettings[currentDifficulty].showTime
+    moleTimeout = setTimeout (() => {
+        if (activeMole) {
+            activeMole.firstChild.style.display = 'none'
+            activeMole.lastChild.style.display = 'block'
+            activeMole = null
+        }
+    }, showTime)
 }
 
+function startGame () {
+    activeMole = null
+    scoreCount = 0
+    score.textContent = `Score: ${scoreCount}`
+    timeLeft = 60
+    updateTimer()
+
+    const appearInterval = difficultySettings[currentDifficulty].appearInterval
+
+    gameInterval = setInterval(() => {
+        appearRandomMole()
+    }, appearInterval)
+
+    const timerInterval = setInterval (() => {
+        timeLeft--
+        updateTimer()
+        if (timeLeft <= 0) {
+            clearInterval(gameInterval)
+            clearInterval(timerInterval)
+            endGame()
+        }
+    }, 1000)
+}
 
 continueButton.addEventListener('click', () => {
     rulesPage.style.display = 'none'
