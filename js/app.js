@@ -1,7 +1,5 @@
 // Pseudocode
 
-const { act } = require("react")
-
 // 1. Initialize DOM elements and game states
 
 // 2. Randomly make the mole appear and disappear while playing
@@ -43,7 +41,6 @@ const score = document.querySelector('.score')
 
 let holesNum = 0
 let scoreCount = 0
-let activeMole = null
 let currentDifficulty = ''
 
 mainPage.style.display = 'block'
@@ -110,22 +107,20 @@ function setupGameboard () {
                 mole.style.display = 'none'
                 rock.style.display = 'block'
             }
+            appearRandomMole()
         })
     }    
 
 }
 
 function appearRandomMole() {
-    if (activeMole) {
-        
-    }
-
     const holes = document.querySelectorAll ('.hole')
     const holeDivs = [...holes]
-    const num = Math.floor(Math.random() * (holesNum - 1)) + 1 //
-    console.log(holeDivs[num-1])
-    holeDivs[num-1].firstChild.style.display = 'block'
-    holeDivs[num-1].lastChild.style.display = 'none'
+    const num = Math.floor(Math.random() * (holesNum)) + 1 //
+    const randomHole = holeDivs [num-1]
+    console.log(randomHole)
+    randomHole.firstChild.style.display = 'block'
+    randomHole.lastChild.style.display = 'none'
 
 }
 
@@ -144,6 +139,7 @@ resetButton.addEventListener('click', () => {
     currentDifficulty = ''
     timer.textContent = ' 00:00'
     score.textContent = 'Score: 0'
+    scoreCount = 0
     gameboard.innerHTML = ''
 })
 
