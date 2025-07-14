@@ -1,12 +1,56 @@
 .mainPage {
-    display: block
+    display: block;
 }
 
 .rulesPage {
-    display: none
+    display: none;
 }
 
 .gamePage {
-    display: none
+    display: none;
+    text-align: center;
 }
+
+.gameboard {
+    display: grid;
+    gap: 100px;
+    justify-content: center;
+}
+
+.gameboard.easyMode {
+    grid-template-columns: repeat(2, 150px);
+}
+
+.gameboard.mediumMode {
+    grid-template-columns: repeat(3, 150px);
+}
+
+.gameboard.hardMode {
+    grid-template-columns: repeat(3, 150px);
+}
+
+.hole {
+    display: flex;
+    justify-content: center;
+    height: 200px;
+    gap: 20px;
+}
+
+.moleImg {
+    display: none;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    gap: 20px;
+}
+
+.rockImg {
+    justify-content: center;
+    width: 250px;
+    height: 200px;
+    gap: 20px;
+    padding-top: 15px;
+}
+
+
 

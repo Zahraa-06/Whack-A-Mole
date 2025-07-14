@@ -10,10 +10,6 @@
 
 // 5. Add the necessary event listeners like the start button
 
-//Queryselector for the gameboard
-//3 part if statements for easy medium and hard
-//if easy append 4 divs to gameboard with class of hole
-//set inner html of each hole div to contain rock and mole image
 
 
 const mainPage = document.querySelector('.mainPage')
@@ -40,6 +36,7 @@ const gameboard = document.querySelector('.gameboard')
 //
 const timer = document.querySelector('#timer')
 const score = document.querySelector('.score')
+    let holesNum
 //
 
 let currentDifficulty = ''
@@ -73,47 +70,42 @@ backButton.addEventListener('click', () => {
 })
 
 function setupGameboard () {
+    gameboard.innerHTML = ''
+    gameboard.classList.remove('easyMode', 'mediumMode', 'hardMode')
 
-    // gameboard.innerHTML = ''
-    // let holesCount;
-    // if (currentDifficulty === 'Easy Mode') {
-    //     holesCount = 4
-    // } else if (currentDifficulty === 'Medium Mode') {
-    //     holesCount = 6
-    // } else {
-    //     holesCount = 9
-    // }
+    // let holesNum
+    let gridClass
 
-    // for (let i=0; i<holesCount;i++) {
-    //     let hole = document.createElement('div')
-    //     hole.className = 'hole'
-    //     hole.innerHTML = `<img src="./assets/mole.png" alt= "Mole" class="moleImg"> <img src="./assets/rock.png" alt="Rock" class="rockImg">`
-    //     gameboard.appendChild(hole)
-    // }
-
-    // let hole = document.createElement('div')
-    // hole.className = 'hole'
-    // hole.innerHTML=`<img src="./assets/mole.png" alt= "Mole" class="moleImg"> <img src="./assets/rock.png" alt="Rock" class="rockImg">`
-    
-    console.log('setup running') //
     if (currentDifficulty === 'Easy Mode') {
-        for (i=0;i<4;i++){
-            
-            let hole = document.createElement('div')
-            hole.className = 'hole'
-            hole.innerHTML=`<img src="./assets/mole.png" alt= "Mole" class="moleImg"> <img src="./assets/rock.png" alt="Rock" class="rockImg">`
-            console.log(hole) //
-            gameboard.appendChild(hole)
-        }
+        holesNum = 4
+        gridClass = 'easyMode'
     } else if (currentDifficulty === 'Medium Mode') {
-        for (i=0;i<6;i++){
-            gameboard.appendChild(hole)
-        }
+        holesNum = 6
+        gridClass = 'mediumMode'
     } else {
-            for (i=0;i<9;i++){
-            gameboard.appendChild(hole)
-        }
+        holesNum = 9
+        gridClass = 'hardMode'
     }
+
+     gameboard.classList.add(gridClass)
+
+    for (let i=0; i<holesNum;i++) {
+        let hole = document.createElement('div')
+        hole.className = 'hole'
+        hole.id = `hole-${i}`
+        hole.innerHTML = `<img src="./assets/mole.png" alt= "Mole" class="moleImg"> <img src="./assets/rock.png" alt="Rock" class="rockImg">`
+        gameboard.appendChild(hole)
+    }    
+}
+
+function appearRandomMole() {
+   const holes = document.querySelectorAll ('.hole')
+   const holeDivs = [...holes]
+   const num = Math.floor(Math.random() * (holesNum - 1)) + 1 //
+    console.log(holeDivs[num-1])
+    holeDivs[num-1].firstChild.style.display = 'block'
+    holeDivs[num-1].lastChild.style.display = 'none'
+
 }
 
 
@@ -122,6 +114,7 @@ continueButton.addEventListener('click', () => {
     gamePage.style.display = 'block'
     titleMode.textContent = `Whack-A-Mole: ${currentDifficulty}`
     setupGameboard()
+    appearRandomMole()
 })
 
 resetButton.addEventListener('click', () => {
