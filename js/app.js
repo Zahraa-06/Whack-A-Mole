@@ -1,5 +1,7 @@
 // Pseudocode
 
+const { act } = require("react")
+
 // 1. Initialize DOM elements and game states
 
 // 2. Randomly make the mole appear and disappear while playing
@@ -35,10 +37,13 @@ const resetButton = document.querySelector('#resetButton')
 const gameboard = document.querySelector('.gameboard')
 //
 const timer = document.querySelector('#timer')
-const score = document.querySelector('.score')
-    let holesNum
+const score = document.querySelector('.score') 
 //
 
+
+let holesNum = 0
+let scoreCount = 0
+let activeMole = null
 let currentDifficulty = ''
 
 mainPage.style.display = 'block'
@@ -73,7 +78,6 @@ function setupGameboard () {
     gameboard.innerHTML = ''
     gameboard.classList.remove('easyMode', 'mediumMode', 'hardMode')
 
-    // let holesNum
     let gridClass
 
     if (currentDifficulty === 'Easy Mode') {
@@ -95,13 +99,30 @@ function setupGameboard () {
         hole.id = `hole-${i}`
         hole.innerHTML = `<img src="./assets/mole.png" alt= "Mole" class="moleImg"> <img src="./assets/rock.png" alt="Rock" class="rockImg">`
         gameboard.appendChild(hole)
+
+        const mole = hole.querySelector('.moleImg')
+        const rock = hole.querySelector('.rockImg')
+
+        hole.addEventListener('click', () => {
+            if (mole.style.display === 'block') {
+                scoreCount++
+                score.textContent = `Score: ${scoreCount}`
+                mole.style.display = 'none'
+                rock.style.display = 'block'
+            }
+        })
     }    
+
 }
 
 function appearRandomMole() {
-   const holes = document.querySelectorAll ('.hole')
-   const holeDivs = [...holes]
-   const num = Math.floor(Math.random() * (holesNum - 1)) + 1 //
+    if (activeMole) {
+        
+    }
+
+    const holes = document.querySelectorAll ('.hole')
+    const holeDivs = [...holes]
+    const num = Math.floor(Math.random() * (holesNum - 1)) + 1 //
     console.log(holeDivs[num-1])
     holeDivs[num-1].firstChild.style.display = 'block'
     holeDivs[num-1].lastChild.style.display = 'none'
