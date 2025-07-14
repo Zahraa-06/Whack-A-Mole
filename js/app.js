@@ -72,29 +72,56 @@ backButton.addEventListener('click', () => {
     mainPage.style.display = 'block'
 })
 
-// function setupGameboard () {
-//     let hole = document.createElement('div')
-//     hole.innerHTML='<img scr="./assets/mole.png" class="moleImg"> <img scr="./assets/rock.png" class="rockImg">'
-//     if (currentDifficulty === easy) {
-//              for (i=0;i<4;i++){
-//             gameboard.appendChild(hole)
-//         }else if (currentDifficulty === 'medium') {
-//              for (i=0;i<6;i++){
-//             gameboard.appendChild(hole)
-//         }else {
-//             for (i=0;i<9;i++){
-//             gameboard.appendChild(hole)
-//         }
-//     }
-// }
-//     }
-// }
+function setupGameboard () {
+
+    // gameboard.innerHTML = ''
+    // let holesCount;
+    // if (currentDifficulty === 'Easy Mode') {
+    //     holesCount = 4
+    // } else if (currentDifficulty === 'Medium Mode') {
+    //     holesCount = 6
+    // } else {
+    //     holesCount = 9
+    // }
+
+    // for (let i=0; i<holesCount;i++) {
+    //     let hole = document.createElement('div')
+    //     hole.className = 'hole'
+    //     hole.innerHTML = `<img src="./assets/mole.png" alt= "Mole" class="moleImg"> <img src="./assets/rock.png" alt="Rock" class="rockImg">`
+    //     gameboard.appendChild(hole)
+    // }
+
+    // let hole = document.createElement('div')
+    // hole.className = 'hole'
+    // hole.innerHTML=`<img src="./assets/mole.png" alt= "Mole" class="moleImg"> <img src="./assets/rock.png" alt="Rock" class="rockImg">`
+    
+    console.log('setup running') //
+    if (currentDifficulty === 'Easy Mode') {
+        for (i=0;i<4;i++){
+            
+            let hole = document.createElement('div')
+            hole.className = 'hole'
+            hole.innerHTML=`<img src="./assets/mole.png" alt= "Mole" class="moleImg"> <img src="./assets/rock.png" alt="Rock" class="rockImg">`
+            console.log(hole) //
+            gameboard.appendChild(hole)
+        }
+    } else if (currentDifficulty === 'Medium Mode') {
+        for (i=0;i<6;i++){
+            gameboard.appendChild(hole)
+        }
+    } else {
+            for (i=0;i<9;i++){
+            gameboard.appendChild(hole)
+        }
+    }
+}
+
 
 continueButton.addEventListener('click', () => {
     rulesPage.style.display = 'none'
     gamePage.style.display = 'block'
     titleMode.textContent = `Whack-A-Mole: ${currentDifficulty}`
-    console.log(setupGameboard)
+    setupGameboard()
 })
 
 resetButton.addEventListener('click', () => {
