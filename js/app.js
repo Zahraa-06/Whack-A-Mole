@@ -26,6 +26,13 @@ const gameboard = document.querySelector('.gameboard')
 const timer = document.querySelector('#timer')
 const score = document.querySelector('#score') 
 const resultDisplay = document.querySelector('#resultDisplay')
+const gameResultModal = document.querySelector('#gameResultModal')
+const totalMolesStat = document.querySelector('#totalMolesStat')
+const molesHitStat = document.querySelector('#molesHitStat')
+const accuracyStat = document.querySelector('#accuracyStat')
+const finalResult = document.querySelector('#finalResult')
+const playAgainBtn = document.querySelector('#playAgainBtn')
+const mainMenuBtn = document.querySelector('#mainMenuBtn')
 const difficultySettings = {
     'Easy Mode': {showTime: 2500, appearInterval: 2500, duration: 10},
     'Medium Mode': {showTime: 1200, appearInterval: 1200, duration: 90},
@@ -43,6 +50,7 @@ let activeMole = null
 let moleTimeout = null
 let isGameActive = false
 let gameStarted = false
+let isResetting = false
 let currentDifficulty = ''
 
 mainPage.style.display = 'block'
@@ -198,35 +206,66 @@ function endGame() {
         activeMole = null
     }
 
-    const molesHitPercentage = totalMoles > 0 ? (molesHit/totalMoles)*100 : 0 
-    const win = molesHitPercentage > 70
+    if (!isResetting) {
+        const molesHitPercentage = totalMoles > 0 ? (molesHit/totalMoles)*100 : 0 
+        const win = molesHitPercentage > 70
 
-    resultDisplay.innerHTML = `
-    <div class= "resultStatus">Total Moles: ${totalMoles}</div>
-    <div class= "resultStatus">Moles Hit: ${molesHit}</div>
-    <div class= "resultStatus">Hit Percentage: ${molesHitPercentage.toFixed(1)}%</div>
-    <div class= "${win ? 'resultWin' : 'resultLose'}">
-        ${win ? 'You win!' : 'You lose!'}
-    </div>
-    <button id="playAgainButton">Play Again</button>
-    `
-    resultDisplay.style.display = 'block'
-    document.getElementById('playAgainButton').style.display = 'inline-block'
+        document.querySelector('#totalMolesStat').textContent = totalMoles
+        document.querySelector('#molesHitStat').textContent = molesHit
+        document.querySelector('#accuracyStat').textContent = `${molesHitPercentage.toFixed(1)}%`
 
-    document.getElementById('playAgainButton').addEventListener('click', () => {
-        resultDisplay.style.display = 'none'
-        gameStarted = false
-        isGameActive = false
-        scoreCount = 0
-        molesHit = 0
-        totalMoles = 0
-        score.textContent = ' 0'
-        scoreCount = 0
-        timeLeft = difficultySettings[currentDifficulty].duration
-        updateTimer()
-    
-        startButton.disabled = false
-    })
+        const finalResult = document.querySelector('#finalResult')
+        finalResult.textContent = win ? 'You Win!' : 'You Lose!'
+        finalResult.className = win ? 'resultMessage winMessage' : 'resultMessage loseMessage'
+
+        const modal = document.querySelector('#gameResultModal')
+        modal.style.display = 'block'
+            
+        const playAgainBtn = document.querySelector('#playAgainBtn')
+        const mainMenuBtn = document.querySelector('#mainMenuBtn')
+        
+        const playAgainClone = playAgainBtn.cloneNode(true)
+        const mainMenuClone = mainMenuBtn.cloneNode(true)
+        
+        playAgainBtn.replaceWith(playAgainClone)
+        mainMenuBtn.replaceWith(mainMenuClone)
+        
+        
+        function handleOutsideClick(e) {
+            if (e.target === modal) {
+                closeModal()
+            }
+        }
+        
+        function closeModal() {
+            modal.style.display = 'none'
+            modal.removeEventListener('click', handleOutsideClick)
+            playAgainClone.removeEventListener('click', handlePlayAgain)
+            mainMenuClone.removeEventListener('click', handleMainMenu)
+        }
+
+        function handlePlayAgain() {
+            closeModal()
+            
+            gameStarted = false
+            isGameActive = false
+            scoreCount = 0
+            molesHit = 0
+            totalMoles = 0
+            document.querySelector('#score').textContent = '0'
+            timeLeft = difficultySettings[currentDifficulty].duration;
+            updateTimer()
+        }
+        
+        function handleMainMenu() {
+            closeModal()
+            document.querySelector('#resetButton').click()
+        }
+        
+        modal.addEventListener('click', handleOutsideClick)
+        playAgainClone.addEventListener('click', handlePlayAgain)
+        mainMenuClone.addEventListener('click', handleMainMenu)
+    }
 }
 
 continueButton.addEventListener('click', () => {
@@ -241,6 +280,7 @@ startButton.addEventListener('click', () => {
 })
 
 resetButton.addEventListener('click', () => {
+    isResetting = true
     endGame()
     if (moleTimeout) {
         clearTimeout(moleTimeout)
@@ -254,6 +294,7 @@ resetButton.addEventListener('click', () => {
     scoreCount = 0
     gameboard.innerHTML = ''
     resultDisplay.style.display = 'none'
+    isResetting = false
 })
 
 
