@@ -10,8 +10,6 @@
 
 // 5. Add the necessary event listeners like the start button
 
-
-
 const mainPage = document.querySelector('.mainPage')
 const easyButton = document.querySelector('#easyButton')
 const mediumButton = document.querySelector('#mediumButton')
@@ -26,10 +24,10 @@ const startButton = document.querySelector('#startButton')
 const resetButton = document.querySelector('#resetButton')
 const gameboard = document.querySelector('.gameboard')
 const timer = document.querySelector('#timer')
-const score = document.querySelector('.score') 
+const score = document.querySelector('#score') 
 const resultDisplay = document.querySelector('#resultDisplay')
 const difficultySettings = {
-    'Easy Mode': {showTime: 2500, appearInterval: 2500, duration: 90},
+    'Easy Mode': {showTime: 2500, appearInterval: 2500, duration: 10},
     'Medium Mode': {showTime: 1200, appearInterval: 1200, duration: 90},
     'Hard Mode': {showTime: 800, appearInterval: 800, duration: 90}
 }
@@ -44,6 +42,7 @@ let timerInterval = null
 let activeMole = null
 let moleTimeout = null
 let isGameActive = false
+let gameStarted = false
 let currentDifficulty = ''
 
 mainPage.style.display = 'block'
@@ -78,7 +77,6 @@ backButton.addEventListener('click', () => {
 function setupGameboard () {
     gameboard.innerHTML = ''
     gameboard.classList.remove('easyMode', 'mediumMode', 'hardMode')
-
     let gridClass
 
     if (currentDifficulty === 'Easy Mode') {
@@ -91,7 +89,6 @@ function setupGameboard () {
         holesNum = 9
         gridClass = 'hardMode'
     }
-
      gameboard.classList.add(gridClass)
 
     for (let i=0; i<holesNum ;i++) {
@@ -103,15 +100,14 @@ function setupGameboard () {
 
         const mole = hole.querySelector('.moleImg')
         const rock = hole.querySelector('.rockImg')
-
         mole.style.display = 'none'
         rock.style.display = 'block'
 
         hole.addEventListener('click', () => {
-            if (isGameActive && mole.style.display === 'block') {
+            if (isGameActive && gameStarted && mole.style.display === 'block') {
                 scoreCount++
                 molesHit ++
-                score.textContent = `Score: ${scoreCount}`
+                score.textContent = ` ${scoreCount}`
                 mole.style.display = 'none'
                 rock.style.display = 'block'
             }
@@ -120,8 +116,7 @@ function setupGameboard () {
 }
 
 function appearRandomMole() {
-    if (!isGameActive) return;
-
+    if (!isGameActive || !gameStarted) return;
     totalMoles++
 
     const holes = document.querySelectorAll ('.hole')
@@ -164,20 +159,19 @@ function updateTimer() {
 }
 
 function startGame () {
+    gameStarted = true
     isGameActive = true
     activeMole = null
     scoreCount = 0
     molesHit = 0
     totalMoles = 0
-    score.textContent = `Score: ${scoreCount}`
-
+    score.textContent = ` ${scoreCount}`
     timeLeft = difficultySettings[currentDifficulty].duration
     updateTimer()
-
     resultDisplay.style.display = 'none'
+    document.getElementById('playAgainButton').style.display = 'none'
 
     const appearInterval = difficultySettings[currentDifficulty].appearInterval
-
     gameInterval = setInterval(() => {
         appearRandomMole()
     }, appearInterval)
@@ -193,6 +187,7 @@ function startGame () {
 }
 
 function endGame() {
+    gameStarted = false
     isGameActive = false
     clearInterval(gameInterval)
     clearInterval(timerInterval)
@@ -204,7 +199,6 @@ function endGame() {
     }
 
     const molesHitPercentage = totalMoles > 0 ? (molesHit/totalMoles)*100 : 0 
-
     const win = molesHitPercentage > 70
 
     resultDisplay.innerHTML = `
@@ -214,9 +208,25 @@ function endGame() {
     <div class= "${win ? 'resultWin' : 'resultLose'}">
         ${win ? 'You win!' : 'You lose!'}
     </div>
+    <button id="playAgainButton">Play Again</button>
     `
-
     resultDisplay.style.display = 'block'
+    document.getElementById('playAgainButton').style.display = 'inline-block'
+
+    document.getElementById('playAgainButton').addEventListener('click', () => {
+        resultDisplay.style.display = 'none'
+        gameStarted = false
+        isGameActive = false
+        scoreCount = 0
+        molesHit = 0
+        totalMoles = 0
+        score.textContent = ' 0'
+        scoreCount = 0
+        timeLeft = difficultySettings[currentDifficulty].duration
+        updateTimer()
+    
+        startButton.disabled = false
+    })
 }
 
 continueButton.addEventListener('click', () => {
@@ -240,7 +250,7 @@ resetButton.addEventListener('click', () => {
     mainPage.style.display = 'block'
     currentDifficulty = ''
     timer.textContent = ' 1:30'
-    score.textContent = 'Score: 0'
+    score.textContent = ' 0'
     scoreCount = 0
     gameboard.innerHTML = ''
     resultDisplay.style.display = 'none'

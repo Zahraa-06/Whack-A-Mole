@@ -90,3 +90,20 @@
     margin-top: 10px;
 }
 
+#playAgainButton {
+    background-color: #89CFF0;
+    color: #0066cc;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 8px rgba(137, 207, 240, 0.3);
+}
+#playAgainButton:hover {
+    background-color: #77BDE0;
+    transform: translateY(-2px);
+}
