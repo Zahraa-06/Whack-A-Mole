@@ -54,5 +54,39 @@
     padding-top: 15px;
 }
 
+#resultDisplay {
+    display: none;
+    position: absolute;
+    margin: 0 auto;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    text-align: center;
+    z-index: 1;
+}
 
+.resultTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.resultStatus {
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+.resultWin {
+    color: #2ecc71;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.resultLose {
+    color: #e74c3c;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
 
