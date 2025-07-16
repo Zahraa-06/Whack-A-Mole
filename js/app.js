@@ -1,15 +1,3 @@
-// Pseudocode
-
-// 1. Initialize DOM elements and game states
-
-// 2. Randomly make the mole appear and disappear while playing
-
-// 3. Handle the whacks and scoring
-
-// 4. Include reset, timer, start game controls and loop the game
-
-// 5. Add the necessary event listeners like the start button
-
 const mainPage = document.querySelector('.mainPage')
 const easyButton = document.querySelector('#easyButton')
 const mediumButton = document.querySelector('#mediumButton')
@@ -124,7 +112,7 @@ function setupGameboard () {
 }
 
 function appearRandomMole() {
-    if (!isGameActive || !gameStarted) return;
+    if (!isGameActive || !gameStarted) return
     totalMoles++
 
     const holes = document.querySelectorAll ('.hole')
@@ -230,7 +218,6 @@ function endGame() {
         playAgainBtn.replaceWith(playAgainClone)
         mainMenuBtn.replaceWith(mainMenuClone)
         
-        
         function handleOutsideClick(e) {
             if (e.target === modal) {
                 closeModal()
@@ -253,7 +240,7 @@ function endGame() {
             molesHit = 0
             totalMoles = 0
             document.querySelector('#score').textContent = '0'
-            timeLeft = difficultySettings[currentDifficulty].duration;
+            timeLeft = difficultySettings[currentDifficulty].duration
             updateTimer()
         }
         
