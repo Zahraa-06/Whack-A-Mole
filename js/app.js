@@ -22,7 +22,7 @@ const finalResult = document.querySelector('#finalResult')
 const playAgainBtn = document.querySelector('#playAgainBtn')
 const mainMenuBtn = document.querySelector('#mainMenuBtn')
 const difficultySettings = {
-    'Easy Mode': {showTime: 2000, appearInterval: 2000, duration: 10},
+    'Easy Mode': {showTime: 2000, appearInterval: 2000, duration: 90},
     'Medium Mode': {showTime: 1200, appearInterval: 1200, duration: 90},
     'Hard Mode': {showTime: 800, appearInterval: 800, duration: 90}
 }

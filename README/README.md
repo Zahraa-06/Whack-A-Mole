@@ -13,11 +13,9 @@ Whack-A-Mole is a classic arcade-style game built with vanilla JavaScript, HTML,
 
 4. Detailed game statistics
 
-5. Responsive design
+5. Smooth animations and transitions
 
-6. Smooth animations and transitions
-
-7. Modern modal interface for results
+6. Modern modal interface for results
 
 ## How to Get Started
 At first, we plan out and write down the to-do list in [Trello](https://trello.com/b/cWuKVxPa/my-trello-board), after that we create the layout of how we want the app to looklike on [Draw.io](https://www.drawio.com/). After that we write down the pseudocode and break down the tasks as much as possible going into detail so we can easily turn the broken down points into code.
