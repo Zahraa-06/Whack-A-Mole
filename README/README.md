@@ -39,6 +39,32 @@ I started with initializing the game, I added the necessary buttons, headers and
 
 And when I thought I wouldn't be able to code a button, slowly the code grew little by little as I added the little pieces of the puzzle and went through multiple challenges while facing the great enemy (the game logic), I started to see that it wasn't just words that I was typing in vain but an actual, fully functioning game. Safe to say this marks one of my proudest moments because I created something I never thought that I was ever going to be able to do.
 
+## Layout
+This is to show the comparison between the initial frame and the final outcome of the game.
+
+1. The main page
+![alt text](image-1.png)
+![alt text](image-2.png)
+
+2. The rules page
+![alt text](image-3.png)
+![alt text](image-4.png)
+
+3. The Easy Mode Game Page
+![alt text](image-5.png)
+![alt text](image-6.png)
+
+4. The Medium Mode Game Page
+![alt text](image-7.png)
+![alt text](image-8.png)
+
+5. The Hard Mode Game Page
+![alt text](image-9.png)
+![alt text](image-10.png)
+
+6. The modal for the win/lose
+![alt text](image-11.png)
+![alt text](image-12.png)
 
 ## Links For My Own Work
 1. [My GitHub Repository](https://github.com/Zahraa-06/Whack-A-Mole)
@@ -86,4 +112,4 @@ And when I thought I wouldn't be able to code a button, slowly the code grew lit
 8. Mobile optimization
 
 ## Credits
-For the credits, I used [DeepSeek](https://www.deepseek.com/en) to generate ideas for the browser game to choose one and I'm going to use [Whack-A-Mole](https://whack-a-mole-js.netlify.app/) as a reference and inspiration. I also used [Claude](https://claude.ai/new) to help with debugging and researching new coding techniques to add. For research I also cross referenced [MDN](https://developer.mozilla.org/en-US/) and [W3 School](https://www.w3schools.com/).
+For the credits, I used [DeepSeek](https://www.deepseek.com/en) to generate ideas for the browser game to choose one and I'm going to use [Whack-A-Mole](https://whack-a-mole-js.netlify.app/) as a reference and inspiration. I also used [Claude](https://claude.ai/new) to help with debugging and researching new coding techniques to add. For research I also cross referenced [MDN](https://developer.mozilla.org/en-US/) and [W3 Schools](https://www.w3schools.com/).
